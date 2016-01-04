@@ -17,7 +17,9 @@ and Digistump LLC (digistump.com)
 uchar              sendEmptyFrame;
 static uchar       intr3Status;    /* used to control interrupt endpoint transmissions */
 
-TeenySerialDevice::TeenySerialDevice(void){}
+TeenySerialDevice::TeenySerialDevice(void){
+    index = 0;
+}
 
 
 void TeenySerialDevice::delay(long milli) {
