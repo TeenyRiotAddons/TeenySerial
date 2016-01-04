@@ -41,7 +41,7 @@ void TeenySerialDevice::flush(){
 void TeenySerialDevice::begin(){
 
     usbBegin();
-    TeenySerialDevice::delay(500);//delay to allow enumeration and such
+    TeenySerialDevice::delay(2500);//delay to allow enumeration and such
 
 }
 
