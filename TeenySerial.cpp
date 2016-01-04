@@ -177,13 +177,14 @@ void TeenySerialDevice::usbPollWrapper()
     /* We need to report rx and tx carrier after open attempt */
     if(intr3Status != 0 && usbInterruptIsReady3()){
         static uchar serialStateNotification[10] = {0xa1, 0x20, 0, 0, 0, 0, 2, 0, 3, 0};
-
         if(intr3Status == 2){
             usbSetInterrupt3(serialStateNotification, 8);
         }else{
             usbSetInterrupt3(serialStateNotification+8, 2);
         }
         intr3Status--;
+
+        this->delay(1000);
     }
     
 }
