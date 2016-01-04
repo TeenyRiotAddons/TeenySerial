@@ -1,7 +1,7 @@
-#include <DigiCDC.h>
+#include <TeenySerial.h>
 void setup() {                
   // initialize the digital pin as an output.
-  SerialUSB.begin(); 
+  TeenySerial.begin(); 
   pinMode(1,OUTPUT);
 }
 
@@ -9,8 +9,8 @@ void setup() {
 void loop() {
   
   //turns led on and off based on sending 0 or 1 from serial terminal
-  if (SerialUSB.available()) {
-    char input = SerialUSB.read();
+  if (TeenySerial.available()) {
+    char input = TeenySerial.read();
     if(input == '0')
       digitalWrite(1,LOW);
     else if(input == '1')
@@ -18,5 +18,5 @@ void loop() {
       
   }
   
-   SerialUSB.delay(100);               // keep usb alive // can alos use SerialUSB.refresh();
+   TeenySerial.delay(100);               // keep usb alive // can alos use TeenySerial.refresh();
 }

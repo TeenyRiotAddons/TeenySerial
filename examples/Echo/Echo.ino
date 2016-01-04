@@ -1,21 +1,21 @@
-#include <DigiCDC.h>
+#include <TeenySerial.h>
 void setup() {                
   // initialize the digital pin as an output.
-  SerialUSB.begin(); 
+  TeenySerial.begin(); 
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
   
-  if (SerialUSB.available()) {
-    SerialUSB.write(SerialUSB.read());
+  if (TeenySerial.available()) {
+    TeenySerial.write(TeenySerial.read());
   }
   
-   //SerialUSB.delay(10);
+   //TeenySerial.delay(10);
    /*
-   if you don't call a SerialUSB function (write, print, read, available, etc) 
-   every 10ms or less then you must throw in some SerialUSB.refresh(); 
+   if you don't call a TeenySerial function (write, print, read, available, etc) 
+   every 10ms or less then you must throw in some TeenySerial.refresh(); 
    for the USB to keep alive - also replace your delays - ie. delay(100); 
-   with SerialUSB.delays ie. SerialUSB.delay(100);
+   with TeenySerial.delays ie. TeenySerial.delay(100);
    */
 }

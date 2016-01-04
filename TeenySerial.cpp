@@ -7,7 +7,7 @@ and Digistump LLC (digistump.com)
 
 */
 
-#include "DigiCDC.h"
+#include "TeenySerial.h"
 #include <stdint.h>
 #include <Arduino.h>
 #include <avr/pgmspace.h>
@@ -17,10 +17,10 @@ and Digistump LLC (digistump.com)
 uchar              sendEmptyFrame;
 static uchar       intr3Status;    /* used to control interrupt endpoint transmissions */
 
-DigiCDCDevice::DigiCDCDevice(void){}
+TeenySerialDevice::TeenySerialDevice(void){}
 
 
-void DigiCDCDevice::delay(long milli) {
+void TeenySerialDevice::delay(long milli) {
   unsigned long last = millis();
   while (milli > 0) {
     unsigned long now = millis();
@@ -30,20 +30,20 @@ void DigiCDCDevice::delay(long milli) {
   }
 }
 
-void DigiCDCDevice::flush(){
+void TeenySerialDevice::flush(){
     cli();
     RingBuffer_InitBuffer(&rxBuf,rxBuf_Data,sizeof(rxBuf_Data));
     sei(); 
 }
 
-void DigiCDCDevice::begin(){
+void TeenySerialDevice::begin(){
 
     usbBegin();
-    DigiCDCDevice::delay(500);//delay to allow enumeration and such
+    TeenySerialDevice::delay(500);//delay to allow enumeration and such
 
 }
 
-size_t DigiCDCDevice::write(uint8_t c)
+size_t TeenySerialDevice::write(uint8_t c)
 {
     if(RingBuffer_IsFull(&txBuf))
     {
@@ -53,20 +53,20 @@ size_t DigiCDCDevice::write(uint8_t c)
     else
     {
         RingBuffer_Insert(&txBuf,c);
-        DigiCDCDevice::delay(5); //gives 4.2-4.7ms per character for usb transfer at low speed
+        TeenySerialDevice::delay(5); //gives 4.2-4.7ms per character for usb transfer at low speed
         return 1;
     }
     
 
 }
 
-int DigiCDCDevice::available()
+int TeenySerialDevice::available()
 {
     refresh();
     return RingBuffer_GetCount(&rxBuf);
 }
 
-int DigiCDCDevice::read()
+int TeenySerialDevice::read()
 {
     if(RingBuffer_IsEmpty(&rxBuf))
     {
@@ -81,7 +81,7 @@ int DigiCDCDevice::read()
    
 }
 
-int DigiCDCDevice::peek()
+int TeenySerialDevice::peek()
 {
     if(RingBuffer_IsEmpty(&rxBuf))
     {
@@ -95,21 +95,21 @@ int DigiCDCDevice::peek()
 }
 
 
-void DigiCDCDevice::task(void)
+void TeenySerialDevice::task(void)
 {    
  
   refresh();
 
 }
 
-void DigiCDCDevice::refresh(void)
+void TeenySerialDevice::refresh(void)
 {    
   _delay_ms(1);
   usbPollWrapper();
 }
 
 
-void DigiCDCDevice::end(void)
+void TeenySerialDevice::end(void)
 {
     // drive both USB pins low to disconnect
     usbDeviceDisconnect();
@@ -119,7 +119,7 @@ void DigiCDCDevice::end(void)
     
 }
 
-DigiCDCDevice::operator bool() {
+TeenySerialDevice::operator bool() {
     refresh();
     return true;
 }
@@ -129,7 +129,7 @@ DigiCDCDevice::operator bool() {
 
 
 
-void DigiCDCDevice::usbBegin()
+void TeenySerialDevice::usbBegin()
 {
     cli();
 
@@ -148,7 +148,7 @@ void DigiCDCDevice::usbBegin()
     sei();   
 }
 
-void DigiCDCDevice::usbPollWrapper()
+void TeenySerialDevice::usbPollWrapper()
 {
     usbPoll();
     while((!(RingBuffer_IsEmpty(&txBuf)))&&(index<9))
@@ -385,4 +385,4 @@ void usbFunctionWriteOut( uchar *data, uchar len )
 } // extern "C"
 #endif
 
-DigiCDCDevice SerialUSB;
+TeenySerialDevice TeenySerial;

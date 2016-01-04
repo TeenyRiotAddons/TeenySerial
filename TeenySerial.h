@@ -6,8 +6,8 @@ and Digistump LLC (digistump.com)
 
 
  */
-#ifndef __DigiCDC_h__
-#define __DigiCDC_h__
+#ifndef __TeenySerial_h__
+#define __TeenySerial_h__
 #include "usbdrv.h"
 
 
@@ -34,9 +34,9 @@ static RingBuffer_t txBuf;
 static uint8_t      txBuf_Data[HW_CDC_TX_BUF_SIZE];
 
 
-class DigiCDCDevice  : public Stream {
+class TeenySerialDevice  : public Stream {
     public:
-        DigiCDCDevice();
+        TeenySerialDevice();
         void begin(), begin(unsigned long x);
         void end();
         void refresh();
@@ -55,7 +55,7 @@ class DigiCDCDevice  : public Stream {
  };
 
 
-extern DigiCDCDevice SerialUSB;
+extern TeenySerialDevice TeenySerial;
 
 
-#endif // __DigiCDC_h__
+#endif // __TeenySerial_h__
