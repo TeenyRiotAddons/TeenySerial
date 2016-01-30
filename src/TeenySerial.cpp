@@ -41,7 +41,7 @@ void TeenySerialDevice::flush(){
 void TeenySerialDevice::begin(){
 
     usbBegin();
-    TeenySerialDevice::delay(2500);//delay to allow enumeration and such
+    TeenySerialDevice::delay(3000);//delay to allow enumeration and such
 
 }
 
@@ -184,7 +184,7 @@ void TeenySerialDevice::usbPollWrapper()
         }
         intr3Status--;
 
-        this->delay(1000);
+        this->delay(3000);
     }
     
 }
